@@ -4,9 +4,9 @@ const gulp = require("gulp");
 const webpack = require("webpack-stream");
 const browsersync = require("browser-sync");
 
-// const dist = "./dist/";
-const dist =
-  "./../../../Program Files/Open Server 5.3.5/OSPanel/domains/pictures-art/";
+const dist = "./dist/";
+// const dist =
+//   "./../../../Program Files/Open Server 5.3.5/OSPanel/domains/pictures-art/";
 
 gulp.task("copy-html", () => {
   return gulp
