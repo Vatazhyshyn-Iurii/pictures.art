@@ -4743,6 +4743,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_accordion__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/accordion */ "./src/js/modules/accordion.js");
 /* harmony import */ var _modules_burger__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/burger */ "./src/js/modules/burger.js");
 /* harmony import */ var _modules_scrolling__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/scrolling */ "./src/js/modules/scrolling.js");
+/* harmony import */ var _modules_drop__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./modules/drop */ "./src/js/modules/drop.js");
+
 
 
 
@@ -4772,6 +4774,7 @@ window.addEventListener('DOMContentLoaded', function () {
   Object(_modules_accordion__WEBPACK_IMPORTED_MODULE_9__["default"])('.accordion-heading');
   Object(_modules_burger__WEBPACK_IMPORTED_MODULE_10__["default"])('.burger-menu', '.burger');
   Object(_modules_scrolling__WEBPACK_IMPORTED_MODULE_11__["default"])('.pageup');
+  Object(_modules_drop__WEBPACK_IMPORTED_MODULE_12__["default"])();
 });
 
 /***/ }),
@@ -4925,6 +4928,83 @@ var checkTextInputs = function checkTextInputs(selector) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (checkTextInputs);
+
+/***/ }),
+
+/***/ "./src/js/modules/drop.js":
+/*!********************************!*\
+  !*** ./src/js/modules/drop.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.function.name */ "./node_modules/core-js/modules/es.function.name.js");
+/* harmony import */ var core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_string_split__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.string.split */ "./node_modules/core-js/modules/es.string.split.js");
+/* harmony import */ var core_js_modules_es_string_split__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_split__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+
+var drop = function drop() {
+  var fileInputs = document.querySelectorAll('[name="upload"]');
+  ['dragenter', 'dragleave', 'dragover', 'drop'].forEach(function (eventName) {
+    fileInputs.forEach(function (input) {
+      input.addEventListener(eventName, preventDefaults, false);
+    });
+  });
+
+  function preventDefaults(event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  function highlight(item) {
+    item.closest('.file_upload').style.border = '5px solid yellow';
+    item.closest('.file_upload').style.backgroundColor = 'rgba(0,0,0, .7)';
+  }
+
+  function unhighlight(item) {
+    item.closest('.file_upload').style.border = 'none';
+
+    if (item.closest('.calc_form')) {
+      item.closest('.file_upload').style.backgroundColor = '#fff';
+    } else {
+      item.closest('.file_upload').style.backgroundColor = '#ededed';
+    }
+  }
+
+  ['dragenter', 'dragover'].forEach(function (eventName) {
+    fileInputs.forEach(function (input) {
+      input.addEventListener(eventName, function () {
+        return highlight(input);
+      }, false);
+    });
+  });
+  ['dragleave', 'drop'].forEach(function (eventName) {
+    fileInputs.forEach(function (input) {
+      input.addEventListener(eventName, function () {
+        return unhighlight(input);
+      }, false);
+    });
+  });
+  fileInputs.forEach(function (input) {
+    input.addEventListener('drop', function (event) {
+      input.files = event.dataTransfer.files;
+      var dots;
+      var techArr = input.files[0].name.split('.');
+      techArr[0].length > 6 ? dots = '...' : dots = '.';
+      var name = techArr[0].substring(0, 6) + dots + techArr[1];
+      input.previousElementSibling.textContent = name;
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (drop);
 
 /***/ }),
 
@@ -5512,7 +5592,7 @@ var showMoreStyles = function showMoreStyles(trigger, wrapper) {
   // });
 
   btn.addEventListener('click', function () {
-    Object(_services_requests__WEBPACK_IMPORTED_MODULE_3__["getResours"])('assets/db.json').then(function (results) {
+    Object(_services_requests__WEBPACK_IMPORTED_MODULE_3__["getResource"])('assets/db.json').then(function (results) {
       return createCards(results.styles);
     }).catch(function (error) {
       return console.log(error);
@@ -5624,13 +5704,13 @@ var sliders = function sliders(slides, direction, prev, next) {
 /*!*************************************!*\
   !*** ./src/js/services/requests.js ***!
   \*************************************/
-/*! exports provided: postData, getResours */
+/*! exports provided: postData, getResource */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postData", function() { return postData; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getResours", function() { return getResours; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getResource", function() { return getResource; });
 /* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.concat */ "./node_modules/core-js/modules/es.array.concat.js");
 /* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.object.to-string */ "./node_modules/core-js/modules/es.object.to-string.js");
@@ -5672,9 +5752,9 @@ var postData = function postData(url, data) {
   });
 };
 
-var getResours = function getResours(url) {
+var getResource = function getResource(url) {
   var res;
-  return regeneratorRuntime.async(function getResours$(_context2) {
+  return regeneratorRuntime.async(function getResource$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
         case 0:
@@ -5689,7 +5769,7 @@ var getResours = function getResours(url) {
             break;
           }
 
-          throw new Error("Could not fetch ".concat(url, ", status ").concat(res.status));
+          throw new Error("Could not fetch ".concat(url, ", status: ").concat(res.status));
 
         case 5:
           _context2.next = 7;

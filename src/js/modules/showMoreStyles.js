@@ -1,4 +1,4 @@
-import { getResours } from '../services/requests';
+import { getResource } from '../services/requests';
 
 const showMoreStyles = (trigger, wrapper) => {
   const btn = document.querySelector(trigger);
@@ -23,7 +23,7 @@ const showMoreStyles = (trigger, wrapper) => {
   // });
 
   btn.addEventListener('click', function() {
-    getResours('assets/db.json')
+    getResource('assets/db.json')
       .then(results => createCards(results.styles))
       .catch(error => console.log(error));
 
